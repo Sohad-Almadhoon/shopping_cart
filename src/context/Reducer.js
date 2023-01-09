@@ -16,15 +16,16 @@ export const cartReducer = (state, action) => {
         cart: state.cart.filter((item) => item.id !== action.payload),
       };
     case ACTIONS.changeQuantity:
-      console.log(state.cart);
       return {
         ...state,
-        cart: state.cart.filter((item) =>
-          item.id === action.payload.id
+        cart: state.cart.filter((item) => {
+          state.cart.length += item.quantity;
+          return item.id === action.payload.id
             ? (item.quantity = action.payload.quantity)
-            : item.quantity
-        ),
+            : item.quantity;
+        }),
       };
+
     default:
       return state;
   }
@@ -42,7 +43,7 @@ export const filterReducer = (state, action) => {
     case FILTER_ACTIONS.sort:
       return {
         ...state,
-        sort:action.payload,
+        sort: action.payload,
       };
     case FILTER_ACTIONS.stock:
       return {

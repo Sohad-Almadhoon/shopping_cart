@@ -13,6 +13,7 @@ const CartPage = () => {
   } = CartState();
   const [showTotal, setShowTotal] = useState(false);
   const [total, setTotal] = useState(0);
+  const [qty, setQuantity] = useState(0);
   useEffect(() => {
     setTotal(
       cart.reduce(
@@ -20,6 +21,7 @@ const CartPage = () => {
         0
       )
     );
+    setQuantity(cart.reduce((acc, curr) => acc + +curr.quantity, 0));
   }, [cart]);
   return (
     <div className="home">
@@ -77,7 +79,9 @@ const CartPage = () => {
         </ListGroup>
       </div>
       <div className="filters summary">
-        <span className="title">Subtotal ({cart.length}) items</span>
+        <span className="title">
+          Subtotal ({+qty}) items
+        </span>
         {showTotal && (
           <span style={{ fontWeight: 700, fontSize: 20 }}>Total £{total}</span>
         )}
